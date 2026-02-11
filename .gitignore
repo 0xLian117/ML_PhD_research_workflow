@@ -1,16 +1,17 @@
 # ══════════════════════════════════════════════════
-# delta_research workflow repo .gitignore
+# ML PhD Research Workflow — .gitignore
 # ══════════════════════════════════════════════════
 
 # ── Code projects (each is its own git repo) ──
-# Ignore ALL contents, only track the code/ directory structure itself
-code/delta_data_sdk/
-code/delta_alpha/
-code/delta_learn/
-code/delta_llm/
+# Add your project directories here:
+# code/project_a/
+# code/project_b/
+code/*/
+
+# ── Project-specific context (customize locally) ──
+CLAUDE.md
 
 # ── Experiment results (large binary files) ──
-# Track directory structure (.gitkeep) but not actual results
 results/**/*.pt
 results/**/*.pth
 results/**/*.onnx
@@ -40,7 +41,6 @@ env/
 *.swp
 *.swo
 *~
-.DS_Store
 
 # ── Secrets ──
 .env

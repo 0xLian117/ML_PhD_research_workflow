@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Hook: PreToolUse (Edit|Write) → block edits to protected files
 # Reads tool input JSON from stdin, checks file_path against protection list
+#
+# Customize: add your critical files to the PROTECTED_BASENAMES list
+# or add path patterns to the case block below.
 
 set -euo pipefail
 
@@ -20,10 +23,10 @@ fi
 
 BASENAME=$(basename "$FILE_PATH")
 
-# Protected basenames (settings, SDK core, package definitions)
+# ── Protected basenames (always blocked) ──
+# Add your critical config files here
 PROTECTED_BASENAMES="settings.json settings.local.json"
 
-# Check basename match
 for PROTECTED in $PROTECTED_BASENAMES; do
   if [ "$BASENAME" = "$PROTECTED" ]; then
     echo "BLOCKED: '$BASENAME' is a protected file. Manual edit required."
@@ -31,20 +34,22 @@ for PROTECTED in $PROTECTED_BASENAMES; do
   fi
 done
 
-# Check SDK core files (only under delta_data_sdk/)
+# ── Protected path patterns ──
+# Customize: add patterns for files Claude should not modify
 case "$FILE_PATH" in
-  *delta_data_sdk/*/api.py|*delta_data_sdk/*/store.py|*delta_data_sdk/*/schema.py)
-    echo "BLOCKED: SDK core file '$BASENAME' is protected. Manual edit required."
-    exit 2
-    ;;
-  *delta_data_sdk/setup.py|*delta_data_sdk/pyproject.toml)
-    echo "BLOCKED: SDK package definition '$BASENAME' is protected. Manual edit required."
-    exit 2
-    ;;
-esac
+  # Example: protect core library files
+  # *my_sdk/*/core.py|*my_sdk/*/api.py)
+  #   echo "BLOCKED: Core library file '$BASENAME' is protected."
+  #   exit 2
+  #   ;;
 
-# Check published papers
-case "$FILE_PATH" in
+  # Example: protect package definitions
+  # *my_sdk/setup.py|*my_sdk/pyproject.toml)
+  #   echo "BLOCKED: Package definition '$BASENAME' is protected."
+  #   exit 2
+  #   ;;
+
+  # Published papers are always read-only
   *papers/published/*)
     echo "BLOCKED: Published paper files are read-only. Copy to drafts/ first."
     exit 2

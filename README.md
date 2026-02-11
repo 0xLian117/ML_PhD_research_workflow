@@ -1,29 +1,30 @@
-# Delta Research — ML PhD Research Workflow
+# ML PhD Research Workflow
 
-Claude Code 驱动的 ML 博士研究全生命周期工作流。覆盖代码开发、实验管理、论文写作、文献综述、项目管理的超级助手。
+Claude Code 驱动的 ML 博士研究全生命周期工作流。覆盖代码开发、实验管理、论文写作、文献综述、项目管理。
+
+设计为**通用模板**：clone 后按自己的研究方向定制 `CLAUDE.md` 和 `domain-template` 即可使用。
 
 ## 目录结构
 
 ```
-delta_research/                         ← 本 repo (workflow + 研究资产)
+your_research/                          ← 本 repo (workflow + 研究资产)
 │
 ├── code/                               ← 代码项目 (各自独立 git repo, 不被本 repo 跟踪)
-│   ├── delta_data_sdk/                 #   数据 SDK — github.com/0xLian117/delta_data_sdk
-│   ├── delta_alpha/                    #   RL 符号搜索 — github.com/0xLian117/delta_alpha
-│   ├── delta_learn/                    #   Hierarchical Transformer (待创建 remote)
-│   └── delta_llm/                      #   LLM 因子生成 (待建)
+│   ├── project_a/                      #   git repo — 你的项目 A
+│   ├── project_b/                      #   git repo — 你的项目 B
+│   └── shared_lib/                     #   git repo — 共享依赖库 (可选)
 │
 ├── results/                            ← 远端下载的实验结果 (本地分析)
-│   ├── delta_alpha/                    #   按 {method}_{YYYYMMDD_HHMMSS}/ 组织
-│   └── delta_learn/
+│   ├── project_a/                      #   按 {method}_{YYYYMMDD_HHMMSS}/ 组织
+│   └── project_b/
 │
 ├── papers/                             ← 论文 (本地草稿 → Overleaf)
 │   ├── drafts/                         #   LaTeX 草稿
-│   ├── templates/                      #   Venue 模板 (ICML, NeurIPS...)
+│   ├── templates/                      #   Venue 模板 (ICML, NeurIPS, AAAI...)
 │   └── published/                      #   已发表 (只读保护)
 │
 ├── slides/                             ← Beamer slides
-│   └── templates/group_meeting.tex     #   组会模板
+│   └── templates/group_meeting.tex     #   组会模板 (Metropolis 主题)
 │
 ├── reports/weekly/                     ← 周报
 ├── literature/                         ← 阅读笔记
@@ -39,12 +40,12 @@ delta_research/                         ← 本 repo (workflow + 研究资产)
 ├── .claude/                            ← Claude Code 配置
 │   ├── settings.json                   #   权限 + hooks
 │   ├── WORKFLOW_QUICK_REF.md           #   速查手册
-│   ├── hooks/                          #   4 个自动化 hook
-│   ├── rules/                          #   12 条规则 (3 always-on + 9 path-scoped)
-│   ├── agents/                         #   7 个只读审查 agent
-│   └── skills/                         #   12 个 slash command
+│   ├── hooks/ (4)                      #   自动化钩子
+│   ├── rules/ (12)                     #   3 always-on + 9 path-scoped
+│   ├── agents/ (7)                     #   只读审查 agent
+│   └── skills/ (12)                    #   slash commands
 │
-├── CLAUDE.md                           ← 项目上下文 (Claude 自动读取)
+├── CLAUDE.example.md                   ← 项目上下文模板 (复制为 CLAUDE.md 后定制)
 └── README.md                           ← 本文件
 ```
 
@@ -52,44 +53,58 @@ delta_research/                         ← 本 repo (workflow + 研究资产)
 
 ## 快速开始
 
-### 1. 环境准备
+### 1. 克隆 & 定制
 
 ```bash
-# 克隆本 workflow repo
-git clone <this-repo-url> delta_research
-cd delta_research
+git clone https://github.com/0xLian117/ML_PhD_research_workflow.git my_research
+cd my_research
 
-# 克隆代码项目到 code/ 目录
-git clone https://github.com/0xLian117/delta_data_sdk.git code/delta_data_sdk
-git clone https://github.com/0xLian117/delta_alpha.git code/delta_alpha
-# delta_learn 需手动创建 remote 后克隆
+# 创建项目上下文 (必须)
+cp CLAUDE.example.md CLAUDE.md
+# 编辑 CLAUDE.md，填入你的研究方向、项目结构、数据接口等
 
-# 安装共享数据 SDK
-pip install -e code/delta_data_sdk/
+# 创建 code/ 下的项目 (各自独立 repo)
+mkdir -p code/
+git clone <your-project-a> code/project_a
+git clone <your-project-b> code/project_b
+
+# 创建对应的 results 目录
+mkdir -p results/project_a results/project_b
 ```
 
-### 2. 远端服务器配置 (镜像目录结构)
+### 2. 定制领域评估标准
+
+编辑 `.claude/rules/domain-template.md`，替换为你的领域评估指标：
+
+| 领域 | 示例指标 |
+|------|---------|
+| 量化金融 | IC, IR, Sharpe |
+| NLP | BLEU, ROUGE, Perplexity |
+| CV | mAP, FID, SSIM |
+| RL | Reward, Success Rate |
+
+### 3. 定制受保护文件
+
+编辑 `.claude/hooks/protect-files.sh`，添加你不希望 Claude 修改的关键文件。
+
+### 4. 远端服务器 (如需 GPU 训练)
 
 ```bash
-# 在远端 GPU 服务器上
-mkdir -p ~/delta_research/code
-cd ~/delta_research/code
-
-git clone https://github.com/0xLian117/delta_data_sdk.git
-git clone https://github.com/0xLian117/delta_alpha.git
-# git clone <delta_learn_remote> delta_learn
-
-pip install -e delta_data_sdk/
+# 在远端 GPU 服务器上镜像 code/ 结构
+mkdir -p ~/my_research/code
+cd ~/my_research/code
+git clone <your-project-a> project_a
+git clone <your-project-b> project_b
 ```
 
-### 3. 启动 Claude Code
+### 5. 启动 Claude Code
 
 ```bash
-cd delta_research
+cd my_research
 claude
 ```
 
-Claude 会自动加载 CLAUDE.md + 所有 rules，识别可用 skills。
+Claude 自动加载 CLAUDE.md + 所有 rules，识别可用 skills。
 
 ---
 
@@ -107,8 +122,8 @@ Claude 会自动加载 CLAUDE.md + 所有 rules，识别可用 skills。
 8. /analyze-results results/project/run_xxx
 ```
 
-**关键**: 每个 code/ 下的项目是独立 git repo，各自 push/pull。
-workflow repo 只跟踪研究资产（论文、笔记、报告、计划），不跟踪代码。
+**关键**: 每个 `code/` 下的项目是独立 git repo，各自 push/pull。
+workflow repo 只跟踪研究资产（论文、笔记、报告、计划），不跟踪代码和模型权重。
 
 ---
 
@@ -121,11 +136,11 @@ workflow repo 只跟踪研究资产（论文、笔记、报告、计划），不
 | 命令 | 用途 | 示例 |
 |------|------|------|
 | `/commit` | Git 提交 (自动排除大文件/密钥) | `/commit "feat: add attention layer"` |
-| `/review-code [file]` | 代码审查 (8 维评分) | `/review-code code/delta_learn/models/transformer.py` |
-| `/experiment [hypothesis]` | 创建实验: 假设→配置→远端命令 | `/experiment "增加 patch size 从 8 到 16 可以捕获更长周期"` |
-| `/analyze-results [dir]` | 分析下载的实验结果 | `/analyze-results results/delta_learn/htf_20250211_143022` |
-| `/compare [dirs]` | 对比多个实验结果 | `/compare results/delta_learn/baseline results/delta_learn/ablation` |
-| `/data-check [target]` | 数据管道检查 (NaN/bias/分布) | `/data-check code/delta_learn/data/` |
+| `/review-code [file]` | 代码审查 (8 维评分) | `/review-code code/my_project/models/model.py` |
+| `/experiment [hypothesis]` | 创建实验: 假设→配置→远端命令 | `/experiment "增加层数从 4 到 8 提升表现"` |
+| `/analyze-results [dir]` | 分析下载的实验结果 | `/analyze-results results/my_project/run_20250211` |
+| `/compare [dirs]` | 对比多个实验结果 | `/compare results/baseline results/ablation` |
+| `/data-check [target]` | 数据管道检查 (NaN/bias/分布) | `/data-check code/my_project/data/` |
 
 ### 学术写作
 
@@ -133,34 +148,34 @@ workflow repo 只跟踪研究资产（论文、笔记、报告、计划），不
 |------|------|------|
 | `/paper-draft [section]` | 起草论文章节 (LaTeX) | `/paper-draft method` |
 | `/proofread [file]` | 校对 (语法/拼写/LaTeX/术语) | `/proofread papers/drafts/main/intro.tex` |
-| `/lit-review [topic]` | 文献搜索 + 综述 | `/lit-review "transformer for time series forecasting"` |
+| `/lit-review [topic]` | 文献搜索 + 综述 | `/lit-review "transformer for time series"` |
 
 ### 报告 & 汇报
 
 | 命令 | 用途 | 示例 |
 |------|------|------|
 | `/weekly-report` | 生成本周研究进展报告 | `/weekly-report` |
-| `/slides [topic]` | 创建 Beamer 组会 slides | `/slides "delta_learn 实验进展"` |
+| `/slides [topic]` | 创建 Beamer 组会 slides | `/slides "本周实验进展"` |
 
 ### 研究
 
 | 命令 | 用途 | 示例 |
 |------|------|------|
-| `/research-idea [desc]` | 将模糊想法形式化为研究计划 | `/research-idea "用 LLM 直接生成因子公式"` |
+| `/research-idea [desc]` | 将模糊想法形式化为研究计划 | `/research-idea "用对比学习改进表征"` |
 
 ---
 
 ## Rules (自动生效规则)
 
-### Always-on (始终生效)
+### Always-on (始终生效, 3 条)
 
 | 规则 | 作用 |
 |------|------|
-| **plan-first** | 非琐碎任务必须先写计划再执行，计划保存到 `quality_reports/plans/` |
-| **orchestrator** | 自治执行循环: CODE 模式 (实现→验证→审查) / WRITE 模式 (起草→校对→审查)，质量 >= 80 方可提交 |
-| **research-journal** | 研究日志协议: 计划后、发现时、session 结束前三个触发点自动记录 |
+| **plan-first** | 非琐碎任务先写计划再执行, 保存到 `quality_reports/plans/` |
+| **orchestrator** | 自治执行循环: CODE 模式 (实现→验证→审查) / WRITE 模式 (起草→校对→审查), 质量 >= 80 方可提交 |
+| **research-journal** | 研究日志: 计划后、发现时、session 结束前三个触发点记录 |
 
-### Path-Scoped (按文件路径自动激活)
+### Path-Scoped (按路径自动激活, 9 条)
 
 | 规则 | 触发路径 | 核心关注 |
 |------|---------|---------|
@@ -172,7 +187,7 @@ workflow repo 只跟踪研究资产（论文、笔记、报告、计划），不
 | **figures-tables** | `**/figures/**, **/plots/**` | 300 DPI, 矢量格式, 色盲友好, >=8pt 字体, 代码生成 |
 | **literature-protocol** | `**/literature/**` | 阅读笔记格式, BibTeX 管理, Related Work 组织 |
 | **exploration-fast-track** | `explorations/**` | 质量阈值降低到 60, 无需计划, 毕业条件 >= 80 |
-| **domain-template** | `**/backtest/**, **/evaluate*` | 量化因子评估标准 (IC/IR/Sharpe), 可替换为其他领域 |
+| **domain-template** | (可定制路径) | 领域评估标准 — 默认量化金融, 可替换为 NLP/CV/RL 等 |
 
 ---
 
@@ -197,18 +212,9 @@ workflow repo 只跟踪研究资产（论文、笔记、报告、计划），不
 | Hook | 触发时机 | 作用 |
 |------|---------|------|
 | **notify.sh** | 任何通知 | macOS 桌面通知 (osascript) |
-| **protect-files.sh** | Edit/Write 操作前 | 拦截对受保护文件的修改 (settings.json, SDK 核心, 已发表论文) |
+| **protect-files.sh** | Edit/Write 前 | 拦截对受保护文件的修改 (可定制保护列表) |
 | **pre-compact.sh** | Context 压缩前 | 保存当前状态到 session log (防止上下文丢失) |
-| **log-reminder.py** | Claude 停止响应时 | 20 次响应未更新日志则弹出提醒 |
-
-### 受保护文件列表
-
-| 类别 | 文件 |
-|------|------|
-| 配置 | `settings.json`, `settings.local.json` |
-| SDK 核心 | `code/delta_data_sdk/**/api.py`, `store.py`, `schema.py` |
-| SDK 包定义 | `code/delta_data_sdk/setup.py`, `pyproject.toml` |
-| 已发表 | `papers/published/**` |
+| **log-reminder.py** | Claude 停止响应时 | 20 次响应未更新日志则提醒 |
 
 ---
 
@@ -220,23 +226,14 @@ workflow repo 只跟踪研究资产（论文、笔记、报告、计划），不
 | 论文章节 | >= 80/100 | paper-reviewer + proofreader |
 | 探索性代码 | >= 60/100 | explorations/ 目录下宽松标准 |
 
-### 因子评估标准
-
-| 指标 | 阈值 |
-|------|------|
-| \|IC_mean\| | > 0.015 |
-| \|IR\| | > 0.3 |
-| IC 一致性 | > 52% |
-| Sharpe | > 0 |
-
 ---
 
 ## 模板
 
 | 模板 | 路径 | 用途 |
 |------|------|------|
-| 周报 | `templates/weekly_report.md` | `/weekly-report` 生成的报告格式 |
-| 实验记录 | `templates/experiment_log.md` | `/experiment` 生成的实验文档格式 |
+| 周报 | `templates/weekly_report.md` | `/weekly-report` 的输出格式 |
+| 实验记录 | `templates/experiment_log.md` | `/experiment` 的实验文档格式 |
 | 阅读笔记 | `templates/reading_note.md` | 文献阅读笔记格式 |
 | 组会 slides | `slides/templates/group_meeting.tex` | Beamer 模板 (Metropolis 主题) |
 
@@ -281,3 +278,15 @@ workflow repo 只跟踪研究资产（论文、笔记、报告、计划），不
 4. **Test split 开发期间禁用** — 只在最终评估时使用
 5. **论文数据必须可复现** — 代码生成, 非手动编辑
 6. **代码和 workflow 分离** — code/ 下各项目独立 repo, workflow repo 不跟踪代码
+
+---
+
+## 定制指南
+
+| 需要定制的文件 | 说明 |
+|-------------|------|
+| `CLAUDE.md` | **必须** — 你的研究主题、项目结构、数据接口、评估标准 |
+| `.claude/rules/domain-template.md` | 领域评估指标 (默认量化金融, 替换为你的领域) |
+| `.claude/hooks/protect-files.sh` | 受保护文件列表 |
+| `.gitignore` | `code/` 下的项目目录名 |
+| `results/` | 为你的项目创建对应子目录 |
