@@ -10,6 +10,7 @@ code/*/
 
 # ── Project-specific context (customize locally) ──
 CLAUDE.md
+context/
 
 # ── Experiment results (large binary files) ──
 results/**/*.pt
