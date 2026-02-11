@@ -5,6 +5,7 @@
 从期货 tick 级原始数据直接学习多 horizon 收益预测。3 层 Hierarchical Transformer 架构。
 数据层通过 `FuturesStore` (data/futures_store.py) 封装 DeltaDB 查询 + tick 特征计算。
 
+<!-- AUTO-GENERATED:tree — /workon 自动刷新，勿手动编辑 -->
 ## 项目结构
 
 ```
@@ -29,6 +30,7 @@ code/delta_learn/
 └── scripts/
     └── train.py                 # 统一训练入口
 ```
+<!-- /AUTO-GENERATED:tree -->
 
 ## 数据层
 

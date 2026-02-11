@@ -19,6 +19,7 @@
 - PostgreSQL + TimescaleDB (数据源: delta_data SDK)
 - SQLAlchemy
 
+<!-- AUTO-GENERATED:tree — /workon 自动刷新，勿手动编辑 -->
 ## 项目结构
 
 ```
@@ -51,6 +52,7 @@ code/delta_alpha/
 ├── dashboard/          # 监控面板
 └── docs/               # 文档
 ```
+<!-- /AUTO-GENERATED:tree -->
 
 ## 核心概念
 
