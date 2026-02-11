@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(gh pr *)",
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(pip list *)",
+      "Bash(pip show *)",
+      "Bash(pip install *)",
+      "Bash(torchrun *)",
+      "Bash(nvidia-smi *)",
+      "Bash(xelatex *)",
+      "Bash(pdflatex *)",
+      "Bash(bibtex *)",
+      "Bash(latexmk *)",
+      "Bash(ls *)",
+      "Bash(wc *)",
+      "Bash(find *)",
+      "Bash(mkdir *)",
+      "Bash(chmod *)",
+      "Bash(open *)",
+      "Bash(sort *)",
+      "Bash(tail *)",
+      "Bash(head *)"
+    ]
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/notify.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/protect-files.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/pre-compact.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/log-reminder.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

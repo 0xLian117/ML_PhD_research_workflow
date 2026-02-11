@@ -1,0 +1,132 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+
+% ── Theme ──
+\usetheme{metropolis}
+\usepackage{appendixnumberbeamer}
+
+% ── Packages ──
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{algorithm2e}
+\usepackage{xeCJK}  % Chinese support
+
+% ── Colors ──
+\definecolor{AccentBlue}{HTML}{2E86C1}
+\definecolor{AccentRed}{HTML}{E74C3C}
+\definecolor{AccentGreen}{HTML}{27AE60}
+\setbeamercolor{progress bar}{fg=AccentBlue}
+
+% ── Notation shortcuts ──
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\loss}{\mathcal{L}}
+
+% ── Info ──
+\title{[Title]}
+\subtitle{Group Meeting — \today}
+\author{[Author Name]}
+\institute{[Lab / University]}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% ── Outline ──
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+
+% ══════════════════════════════════════
+\section{Motivation}
+% ══════════════════════════════════════
+
+\begin{frame}{Problem}
+\begin{itemize}
+    \item Background point 1
+    \item Background point 2
+    \item \textbf{Research question}: ...?
+\end{itemize}
+\end{frame}
+
+% ══════════════════════════════════════
+\section{Method}
+% ══════════════════════════════════════
+
+\begin{frame}{Approach Overview}
+\begin{columns}[T]
+    \column{0.5\textwidth}
+    \begin{itemize}
+        \item Step 1
+        \item Step 2
+        \item Step 3
+    \end{itemize}
+    \column{0.5\textwidth}
+    % \includegraphics[width=\textwidth]{figures/overview.pdf}
+    [Figure placeholder]
+\end{columns}
+\end{frame}
+
+\begin{frame}{Key Idea}
+\begin{equation}
+    \loss = \E \left[ \| y - \hat{y} \|^2 \right]
+\end{equation}
+\begin{itemize}
+    \item Explanation of the key formula
+\end{itemize}
+\end{frame}
+
+% ══════════════════════════════════════
+\section{Experiments}
+% ══════════════════════════════════════
+
+\begin{frame}{Setup}
+\begin{itemize}
+    \item \textbf{Data}: ...
+    \item \textbf{Baselines}: ...
+    \item \textbf{Metrics}: ...
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Results}
+\begin{table}
+    \centering
+    \begin{tabular}{lcc}
+        \toprule
+        Method & Metric 1 & Metric 2 \\
+        \midrule
+        Baseline & 0.00 & 0.00 \\
+        \textbf{Ours} & \textbf{0.00} & \textbf{0.00} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Main results.}
+\end{table}
+\end{frame}
+
+% ══════════════════════════════════════
+\section{Conclusion}
+% ══════════════════════════════════════
+
+\begin{frame}{Summary \& Next Steps}
+\textbf{Summary}
+\begin{itemize}
+    \item Finding 1
+    \item Finding 2
+\end{itemize}
+\vspace{1em}
+\textbf{Next Steps}
+\begin{itemize}
+    \item Plan 1
+    \item Plan 2
+\end{itemize}
+\end{frame}
+
+% ── References ──
+\begin{frame}[allowframebreaks]{References}
+\footnotesize
+% \bibliographystyle{apalike}
+% \bibliography{references}
+\end{frame}
+
+\end{document}
