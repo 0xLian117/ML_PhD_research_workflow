@@ -9,6 +9,10 @@ Claude Code 驱动的 ML 博士研究全生命周期工作流。覆盖代码开�
 ```
 your_research/                          ← 本 repo (workflow + 研究资产)
 │
+├── context/                            ← 项目上下文 (/workon 读取)
+│   ├── project_a.md                    #   项目 A 完整上下文 (目的/架构/进度)
+│   └── project_b.md                    #   项目 B 完整上下文
+│
 ├── code/                               ← 代码项目 (各自独立 git repo, 不被本 repo 跟踪)
 │   ├── project_a/                      #   git repo — 你的项目 A
 │   ├── project_b/                      #   git repo — 你的项目 B
@@ -47,6 +51,9 @@ your_research/                          ← 本 repo (workflow + 研究资产)
 │
 ├── CLAUDE.example.md                   ← 项目上下文模板 (复制为 CLAUDE.md 后定制)
 └── README.md                           ← 本文件
+
+**项目上下文**放在 `context/` 目录 (非 `code/` 下)，保持代码仓库纯净。
+使用 `/workon [name]` 切入项目，自动加载 `context/{name}.md`。
 ```
 
 ---
@@ -61,12 +68,17 @@ cd my_research
 
 # 创建项目上下文 (必须)
 cp CLAUDE.example.md CLAUDE.md
-# 编辑 CLAUDE.md，填入你的研究方向、项目结构、数据接口等
+# 编辑 CLAUDE.md，填入你的研究方向、项目注册表、数据接口等
 
 # 创建 code/ 下的项目 (各自独立 repo)
 mkdir -p code/
 git clone <your-project-a> code/project_a
 git clone <your-project-b> code/project_b
+
+# 为每个项目创建上下文文件 (供 /workon 使用)
+mkdir -p context/
+# 在 context/project_a.md 中写入项目的目的、架构、文件结构、进度等
+# 在 context/project_b.md 中同上
 
 # 创建对应的 results 目录
 mkdir -p results/project_a results/project_b
@@ -135,6 +147,7 @@ workflow repo 只跟踪研究资产（论文、笔记、报告、计划），不
 
 | 命令 | 用途 | 示例 |
 |------|------|------|
+| `/workon [name]` | 切入项目上下文 (加载文档 + git 状态) | `/workon delta_learn` |
 | `/commit` | Git 提交 (自动排除大文件/密钥) | `/commit "feat: add attention layer"` |
 | `/review-code [file]` | 代码审查 (8 维评分) | `/review-code code/my_project/models/model.py` |
 | `/experiment [hypothesis]` | 创建实验: 假设→配置→远端命令 | `/experiment "增加层数从 4 到 8 提升表现"` |
@@ -285,7 +298,8 @@ workflow repo 只跟踪研究资产（论文、笔记、报告、计划），不
 
 | 需要定制的文件 | 说明 |
 |-------------|------|
-| `CLAUDE.md` | **必须** — 你的研究主题、项目结构、数据接口、评估标准 |
+| `CLAUDE.md` | **必须** — 你的研究主题、项目注册表、数据接口、评估标准 |
+| `context/*.md` | **必须** — 每个项目的完整上下文 (目的/架构/进度), 供 `/workon` 使用 |
 | `.claude/rules/domain-template.md` | 领域评估指标 (默认量化金融, 替换为你的领域) |
 | `.claude/hooks/protect-files.sh` | 受保护文件列表 |
 | `.gitignore` | `code/` 下的项目目录名 |

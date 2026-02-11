@@ -4,14 +4,37 @@
 
 [简要描述你的研究方向和目标]
 
-## 项目结构
+## 项目切入
+
+使用 `/workon [name]` 切入具体项目。项目上下文统一存放在 `context/` 目录。
+当用户提到项目名时，自动读 `context/{name}.md` 获取完整上下文。
+
+## 项目注册表
+
+| 项目 | 一句话 | 代码路径 | 结果路径 | 上下文 |
+|------|--------|----------|----------|--------|
+| project_a | [项目 A 描述] | `code/project_a/` | `results/project_a/` | `context/project_a.md` |
+| project_b | [项目 B 描述] | `code/project_b/` | `results/project_b/` | `context/project_b.md` |
+| shared_lib | [共享库描述] | `code/shared_lib/` | — | `context/shared_lib.md` |
+
+### 代码仓库 (独立 git repo)
+
+| 仓库 | Remote |
+|------|--------|
+| project_a | `github.com/you/project_a` |
+| project_b | `github.com/you/project_b` |
+
+每个项目独立 push/pull，本 workflow repo 不跟踪代码内容。
+
+## 目录结构
 
 ```
 your_research/
-├── CLAUDE.md              ← 本文件
+├── CLAUDE.md              ← 本文件 (研究概览 + 项目注册表)
+├── context/               ← 项目上下文 (/workon 读取)
+│   ├── project_a.md       #   完整上下文 (目的/架构/进度)
+│   └── project_b.md
 ├── code/                  ← 代码项目 (各自独立 git repo)
-│   ├── project_a/         # 项目 A
-│   └── project_b/         # 项目 B
 ├── results/               ← 远端实验结果
 ├── papers/                ← 论文草稿
 └── ...                    ← (其他目录见 README.md)
@@ -27,18 +50,6 @@ from your_data_lib import DataLoader
 loader = DataLoader(config)
 df = loader.load("2024-01-01", "2024-12-31")
 ```
-
-## 各项目职责
-
-### project_a — [描述]
-- 路径: `code/project_a/`
-- 功能: [项目 A 做什么]
-- 详细文档: `code/project_a/CLAUDE.md`
-
-### project_b — [描述]
-- 路径: `code/project_b/`
-- 功能: [项目 B 做什么]
-- 详细文档: `code/project_b/CLAUDE.md`
 
 ## 共享约定
 
@@ -60,6 +71,7 @@ df = loader.load("2024-01-01", "2024-12-31")
 ### Skills 速查
 | 命令 | 用途 |
 |------|------|
+| `/workon [name]` | 切入项目上下文 |
 | `/commit` | Git 提交工作流 |
 | `/review-code [file]` | 代码审查 |
 | `/experiment [hypo]` | 新实验 (含远端运行命令) |
