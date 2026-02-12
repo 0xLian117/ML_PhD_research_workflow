@@ -72,6 +72,10 @@ wandb/
 *.snm
 *.vrb
 
+# ── Project-specific logs/plans/reviews (local only) ──
+quality_reports/**/*.md
+reports/**/*.md
+
 # ── Claude Code local/session state ──
 .claude/settings.local.json
 .claude/projects/
