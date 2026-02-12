@@ -1,5 +1,7 @@
 # ML PhD Research Workflow
 
+**English** | [中文](README.zh-CN.md)
+
 A Claude Code–driven, full-lifecycle research workflow for ML PhDs. Covers code development, experiment management, paper writing, literature review, and project management.
 
 Designed as a **generic template**: clone, customize `CLAUDE.md` and `domain-template`, and you're ready to go.
