@@ -58,6 +58,7 @@ quality_reports/ → 计划/日志/审查报告
 | `/lit-review [topic]` | 文献综述 |
 | `/weekly-report` | 周报 |
 | `/slides [topic]` | 组会 slides |
+| `/debug [症状/日志]` | 结构化 ML 实验调试 |
 | `/research-idea [desc]` | 形式化研究想法 |
 
 ## Quality Gates

@@ -5,16 +5,15 @@
 # Customize: add your critical files to the PROTECTED_BASENAMES list
 # or add path patterns to the case block below.
 
-set -euo pipefail
+set -eu
 
-INPUT=$(cat)
-
-FILE_PATH=$(echo "$INPUT" | python3 -c "
+FILE_PATH=$(python3 -c "
 import sys, json
-data = json.load(sys.stdin)
-# tool_input contains the parameters passed to Edit/Write
-tool_input = data.get('tool_input', {})
-print(tool_input.get('file_path', ''))
+try:
+    data = json.load(sys.stdin)
+    print(data.get('tool_input', {}).get('file_path', ''))
+except Exception:
+    print('')
 " 2>/dev/null || echo "")
 
 if [ -z "$FILE_PATH" ]; then
