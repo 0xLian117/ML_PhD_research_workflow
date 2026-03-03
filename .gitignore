@@ -54,6 +54,10 @@ env/
 figures/*.pdf
 figures/*.png
 
+# ── Generated slides (session-specific, not reusable) ──
+slides/*.md
+!slides/templates/*.md
+
 # ── ML artifacts (if any leak to root) ──
 *.pt
 *.pth
