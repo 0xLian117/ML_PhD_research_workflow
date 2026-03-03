@@ -58,12 +58,13 @@ def main():
     # Block if threshold reached
     if state["count"] >= 20:
         today = datetime.now().strftime("%Y-%m-%d")
-        print(
+        msg = (
             f"RESEARCH LOG REMINDER: {state['count']} responses since last log update.\n"
             f"Please update or create a session log in {LOG_DIR}/\n"
             f"Suggested filename: {LOG_DIR}/{today}_session.md\n"
             f"Include: progress, decisions, findings, next steps."
         )
+        print(msg, file=sys.stderr)
         # Reset counter after reminder
         state["count"] = 0
         write_counter(state)

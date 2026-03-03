@@ -23,7 +23,7 @@ DRAFT → PROOFREAD (proofreader) → REVIEW (paper-reviewer) → REVISE → SCO
 |------|------|
 | Python | `python -c "import module"` 通过, 语法无报错, `--test`/dry-run 模式 |
 | Config | YAML 合法, 必需字段完整, 路径存在 |
-| LaTeX | 编译通过 (latexmk), 无 undefined reference |
+| LaTeX | 编译通过 (latexmk), 无 undefined reference (论文 only, slides 用 Marp) |
 | Figures | 文件生成, 尺寸合理, 格式正确 |
 
 **注意**: GPU 训练在远端服务器运行，本地无法直接验证训练结果。

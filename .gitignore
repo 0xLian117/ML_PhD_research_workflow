@@ -50,6 +50,10 @@ env/
 *credentials*
 *secret*
 
+# ── Generated figures (re-generate from scripts) ──
+figures/*.pdf
+figures/*.png
+
 # ── ML artifacts (if any leak to root) ──
 *.pt
 *.pth
