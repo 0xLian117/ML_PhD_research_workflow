@@ -66,7 +66,7 @@ your_research/                          ← This repo (workflow + research asset
 │   ├── hooks/ (4)                      #   Automation hooks
 │   ├── rules/ (12+)                    #   3 always-on + 9 path-scoped
 │   ├── agents/ (7)                     #   Read-only review agents
-│   └── skills/ (14)                    #   Slash commands
+│   └── skills/ (15)                    #   Slash commands
 │
 ├── CLAUDE.example.md                   ← Project context template (copy to CLAUDE.md and customize)
 └── README.md                           ← This file
@@ -256,6 +256,7 @@ Type the following commands in Claude Code to trigger the corresponding workflow
 | Command | Purpose | Example |
 |---------|---------|---------|
 | `/weekly-report` | Generate weekly research progress report | `/weekly-report` |
+| `/project-report [name]` | Generate in-depth single-project report (advisor meeting / milestone summary) | `/project-report delta_learn` |
 | `/slides [topic]` | Create Beamer group meeting slides | `/slides "this week's experiments"` |
 
 ### Research
@@ -432,6 +433,7 @@ Claude will automatically:
 | Weekly Report | `templates/weekly_report.md` | Output format for `/weekly-report` |
 | Experiment Log | `templates/experiment_log.md` | Experiment documentation format for `/experiment` |
 | Reading Note | `templates/reading_note.md` | Literature reading note format |
+| Project Report | `templates/project_report.md` | Output format for `/project-report` |
 | Group Meeting Slides | `slides/templates/group_meeting.tex` | Beamer template (Metropolis theme) |
 
 ---

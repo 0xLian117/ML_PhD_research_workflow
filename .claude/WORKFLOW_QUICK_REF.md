@@ -57,6 +57,7 @@ quality_reports/ → 计划/日志/审查报告
 | `/proofread [file]` | 校对 |
 | `/lit-review [topic]` | 文献综述 |
 | `/weekly-report` | 周报 |
+| `/project-report [name]` | 单项目深度报告 |
 | `/slides [topic]` | 组会 slides |
 | `/debug [症状/日志]` | 结构化 ML 实验调试 |
 | `/research-idea [desc]` | 形式化研究想法 |

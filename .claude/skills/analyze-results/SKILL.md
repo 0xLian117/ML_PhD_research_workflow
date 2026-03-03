@@ -80,6 +80,13 @@ allowed-tools:
 1. [建议的下一步行动]
 ```
 
+### 5.5. 图表生成 (按需)
+
+如果分析涉及趋势对比、指标可视化等，使用 `/figure` skill 的工具链生成图表:
+- 调用 `figures/scripts/scientific_figure_pro.py` 中的 helper 函数
+- 遵循 `figures/DESIGN_THEORY.md` 的设计规范
+- 图表保存到 `figures/` 目录，在报告中引用路径
+
 ### 6. 用户建议
 - 假设成立 → 建议巩固 (更多 seeds, 更长时间段)
 - 假设不成立 → 分析原因, 建议调整方向

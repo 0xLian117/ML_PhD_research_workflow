@@ -42,6 +42,13 @@ allowed-tools:
 - IC 稳定性对比 (std)
 - 过拟合信号 (train-val gap)
 
+### 4.5. 图表生成 (按需)
+
+如果对比涉及多组实验的趋势/指标可视化，使用 `/figure` skill 的工具链生成图表:
+- 调用 `figures/scripts/scientific_figure_pro.py` 中的 helper 函数
+- 遵循 `figures/DESIGN_THEORY.md` 的设计规范
+- 图表保存到 `figures/` 目录，在报告中引用路径
+
 ### 5. 结论
 - 哪个实验更好, 在哪些维度
 - 差异是否显著

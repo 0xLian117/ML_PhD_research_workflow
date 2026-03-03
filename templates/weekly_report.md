@@ -1,38 +1,45 @@
-# Weekly Report — YYYY Week NN (MM/DD - MM/DD)
+# 周报 — YYYY 第 NN 周 (MM/DD - MM/DD)
 
-## Summary
-[1-2 句总结本周最重要的进展]
+## 本周一句话 (Headline)
 
-## Progress
+[一句话概括最重要的研究进展或转折点]
 
-### Code & Models
-- [完成的代码工作]
+## 各项目进展 (Project Summaries)
 
-### Experiments
-| Experiment | Hypothesis | Result | Status |
-|-----------|-----------|--------|--------|
-| [name] | [hypothesis] | [key metric] | Accept/Reject/Ongoing |
+### {project_name}
 
-### Writing
-- [论文/报告进展]
+**阶段**: [当前阶段, e.g. "代码就绪, 待远端实验"]
+**本周焦点**: [1-2 句, 做了什么 + 为什么]
+**关键发现**: [最重要的 1-2 条]
+**状态**: [进行中 / 等待实验 / 已完成阶段X]
+> 详见 `reports/projects/{name}/YYYY-MM-DD.md`
 
-### Literature
-- [读的论文, 新发现]
+## 发现与决策 (Findings & Decisions)
 
-## Key Findings
-1. [本周最重要的发现/洞察]
+### 发现
 
-## Issues & Blockers
-- [遇到的问题, 待解决]
+- [跨项目 or 全局影响的发现]
 
-## Next Week Plan
-- [ ] [计划 1]
-- [ ] [计划 2]
-- [ ] [计划 3]
+### 决策
 
-## Metrics
-| Metric | This Week | Last Week | Trend |
-|--------|-----------|-----------|-------|
-| Commits | N | N | ↑↓→ |
-| Experiments run | N | N | |
-| Papers read | N | N | |
+- [方向/方法选择 + 理由]
+
+## 阻塞与风险 (Blockers & Risks)
+
+- [ ] [阻塞项] — 影响范围 — 需要的行动
+
+## 下周计划 (Next Week)
+
+| 优先级 | 项目 | 行动项 | 预期产出 |
+|--------|------|--------|----------|
+| P0 | {name} | [行动] | [产出] |
+
+## 研究健康度 (Research Pulse)
+
+| 维度 | 状态 | 备注 |
+|------|------|------|
+| 实验进度 | On track / Delayed / Blocked | |
+| 代码就绪 | Ready / In progress | |
+| 数据管线 | Healthy / Issues | |
+| 论文写作 | Not started / Drafting / Reviewing | |
+| 开放问题 | N 个 | [最紧急的] |

@@ -66,7 +66,7 @@ your_research/                          ← 本 repo (workflow + 研究资产)
 │   ├── hooks/ (4)                      #   自动化钩子
 │   ├── rules/ (12+)                    #   3 always-on + 9 path-scoped
 │   ├── agents/ (7)                     #   只读审查 agent
-│   └── skills/ (14)                    #   slash commands
+│   └── skills/ (15)                    #   slash commands
 │
 ├── CLAUDE.example.md                   ← 项目上下文模板 (复制为 CLAUDE.md 后定制)
 └── README.md                           ← 本文件
@@ -256,6 +256,7 @@ explorations/ 目录规则宽松：60 分就够，不需要事先计划。如果
 | 命令 | 用途 | 示例 |
 |------|------|------|
 | `/weekly-report` | 生成本周研究进展报告 | `/weekly-report` |
+| `/project-report [name]` | 单项目深度报告 (导师汇报/阶段总结) | `/project-report delta_learn` |
 | `/slides [topic]` | 创建 Beamer 组会 slides | `/slides "本周实验进展"` |
 
 ### 研究
@@ -432,6 +433,7 @@ Claude 会自动：
 | 周报 | `templates/weekly_report.md` | `/weekly-report` 的输出格式 |
 | 实验记录 | `templates/experiment_log.md` | `/experiment` 的实验文档格式 |
 | 阅读笔记 | `templates/reading_note.md` | 文献阅读笔记格式 |
+| 项目报告 | `templates/project_report.md` | `/project-report` 的输出格式 |
 | 组会 slides | `slides/templates/group_meeting.tex` | Beamer 模板 (Metropolis 主题) |
 
 ---
