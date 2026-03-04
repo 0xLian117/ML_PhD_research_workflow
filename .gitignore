@@ -12,13 +12,12 @@ code/*/
 CLAUDE.md
 context/
 
-# ── Experiment results (large binary files) ──
-results/**/*.pt
-results/**/*.pth
-results/**/*.onnx
-results/**/*.tar.gz
-results/**/*.zip
-results/**/train.log
+# ── Content directories (framework tracked, content not) ──
+results/**
+explorations/**
+slides/*.pptx
+slides/~$*
+slides/.claude/
 
 # ── Python ──
 __pycache__/
