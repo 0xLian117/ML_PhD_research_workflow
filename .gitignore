@@ -52,6 +52,7 @@ env/
 # ── Generated figures (re-generate from scripts) ──
 figures/*.pdf
 figures/*.png
+figures/scripts/
 
 # ── Generated slides (session-specific, not reusable) ──
 slides/*.md
