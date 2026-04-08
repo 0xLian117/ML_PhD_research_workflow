@@ -83,5 +83,5 @@ tools:
 1. 理解搜索/整理需求
 2. 执行搜索或读取现有笔记
 3. 组织结果
-4. 保存到 `literature/` 或 `quality_reports/reviews/`
+4. 保存到 `literature/`
 5. **搜索结果需用户验证准确性 (LLM 可能产生幻觉)**

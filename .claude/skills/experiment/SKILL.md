@@ -2,6 +2,7 @@
 name: experiment
 description: "设置新实验：从假设到配置到执行计划，生成远端运行命令"
 argument-hint: "[hypothesis or experiment description]"
+disable-model-invocation: true
 allowed-tools:
   - Read
   - Grep
@@ -46,7 +47,7 @@ allowed-tools:
 **Config**: [new config path]
 **Status**: Prepared
 ```
-保存到 `quality_reports/plans/experiment_YYYY-MM-DD_[name].md`
+保存到 `reports/plans/experiment_YYYY-MM-DD_[name].md`
 
 ### 5. 本地验证
 ```bash

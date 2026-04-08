@@ -2,6 +2,7 @@
 name: commit
 description: "Git 提交工作流: 状态检查 → 排除敏感文件 → stage → 自动审查 → commit → 可选 push"
 argument-hint: "[optional: commit message]"
+disable-model-invocation: true
 allowed-tools:
   - Bash
   - Read
@@ -27,6 +28,11 @@ git diff --stat
 - `node_modules/`, `.venv/`
 
 如发现上述文件在变更中，警告用户并跳过。
+
+### 2.5 Context 同步检查
+如果变更涉及 `code/{name}/` 下的文件:
+- 检查 `context/{name}.md` 是否需要更新 (新增/删除模块、改架构、改特征)
+- 如需更新，先更新 context 再继续提交
 
 ### 3. Stage 文件
 - 如用户指定了文件，stage 指定文件

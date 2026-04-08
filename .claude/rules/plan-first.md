@@ -5,7 +5,7 @@
 
 ## Workflow
 1. 收到非琐碎任务 → 进入 plan mode
-2. 写计划到 `quality_reports/plans/YYYY-MM-DD_<slug>.md`
+2. 写计划到 `reports/plans/YYYY-MM-DD_<slug>.md`
 3. 用户批准 → 执行
 4. 未批准 → 修改计划 → 重新提交
 
@@ -30,6 +30,6 @@
 ## Session Recovery
 新 session 或 context compact 后的恢复顺序:
 1. 读 CLAUDE.md (项目上下文)
-2. 读最近的 plan (`quality_reports/plans/` 最新文件)
+2. 读最近的 plan (`reports/plans/` 最新文件)
 3. `git log -10` + `git diff` (最近变更)
 4. 复述当前任务和进度，向用户确认

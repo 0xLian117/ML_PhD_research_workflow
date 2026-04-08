@@ -26,7 +26,7 @@
 
 ## 日志位置和格式
 
-路径: `quality_reports/session_logs/YYYY-MM-DD_<description>.md`
+路径: `reports/logs/YYYY-MM-DD_<description>.md`
 
 ```markdown
 # Session Log — YYYY-MM-DD — <description>

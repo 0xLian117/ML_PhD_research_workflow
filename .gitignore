@@ -15,9 +15,7 @@ context/
 # ── Content directories (framework tracked, content not) ──
 results/**
 explorations/**
-slides/*.pptx
-slides/~$*
-slides/.claude/
+slides/*/
 
 # ── Python ──
 __pycache__/
@@ -49,14 +47,11 @@ env/
 *credentials*
 *secret*
 
-# ── Generated figures (re-generate from scripts) ──
-figures/*.pdf
-figures/*.png
-figures/scripts/
+# ── Generated figures (全部 gitignore, 仅 DESIGN_THEORY.md 进 git) ──
+figures/src/
+figures/out/
 
-# ── Generated slides (session-specific, not reusable) ──
-slides/*.md
-!slides/templates/*.md
+# ── Slides (Slidev, 每次演示一个子目录) ──
 
 # ── ML artifacts (if any leak to root) ──
 *.pt
@@ -80,9 +75,9 @@ wandb/
 *.snm
 *.vrb
 
-# ── Project-specific logs/plans/reviews (local only) ──
-quality_reports/**/*.md
+# ── Reports (local only) ──
 reports/**/*.md
+reports/**/*.pdf
 
 # ── Claude Code local/session state ──
 .claude/settings.local.json

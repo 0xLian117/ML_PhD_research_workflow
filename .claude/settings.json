@@ -49,28 +49,6 @@
           }
         ]
       }
-    ],
-    "PreCompact": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": ".claude/hooks/pre-compact.sh",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 /Users/lian/Desktop/delta_research/.claude/hooks/log-reminder.py",
-            "timeout": 10
-          }
-        ]
-      }
     ]
   }
 }

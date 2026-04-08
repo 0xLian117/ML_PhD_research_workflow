@@ -84,5 +84,5 @@ tools:
 ## 指令
 1. 读取指定文件
 2. 按 8 个维度逐一检查
-3. 生成报告保存到 `quality_reports/reviews/[basename]_code_review.md`
+3. 生成报告保存到 `reports/projects/[basename]_code_review.md`
 4. **只读审查，不修改任何代码文件**

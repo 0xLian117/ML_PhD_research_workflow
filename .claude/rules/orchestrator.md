@@ -11,7 +11,7 @@ IMPLEMENT → VERIFY (本地检查) → REVIEW (code-reviewer) → FIX → SCORE
 
 ### WRITE 模式 (*.tex, *.md 论文/报告)
 ```
-DRAFT → PROOFREAD (proofreader) → REVIEW (paper-reviewer) → REVISE → SCORE
+DRAFT → PROOFREAD → REVIEW → REVISE → SCORE
 ```
 
 ### MIXED 模式
@@ -41,7 +41,7 @@ Claude 辅助准备，用户手动在远端执行:
                                   5. 运行训练/实验
                                   6. tar 结果
 7. 下载结果 ←────────────────────
-8. /analyze-results 分析
+8. /analyze 分析
 ```
 
 ## 质量门控
@@ -67,3 +67,21 @@ Claude 辅助准备，用户手动在远端执行:
 - 清晰度 (20): 术语准确, 表述简洁
 - 格式 (15): LaTeX 正确, 引用完整
 - 语言 (15): 语法正确, 学术语气
+
+## 远端服务器目录结构
+
+```
+remote:~/delta_research/
+├── code/
+│   ├── delta_data_sdk/    # git clone → pip install -e
+│   ├── delta_alpha/       # git clone
+│   └── delta_learn/       # git clone
+└── outputs/               # 训练输出 (tar → 下载到本地 results/)
+```
+
+## Non-Negotiables
+- **Look-ahead bias 零容忍** (详见 data-pipeline rule)
+- 每个实验必须有 seed
+- NaN 必须检查和处理
+- Test split 开发期间禁用
+- 论文数据必须可复现 (代码生成, 非手动)

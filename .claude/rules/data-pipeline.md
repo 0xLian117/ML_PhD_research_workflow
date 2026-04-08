@@ -1,7 +1,7 @@
 ---
-paths: ["**/data/**", "**/data/*.py"]
+paths: ["**/data/**", "**/data/*.py", "**/backtest/**", "**/evaluate*"]
 ---
-# Data Pipeline Standards
+# Data Pipeline & Evaluation Standards
 
 ## Look-Ahead Bias 红线 (零容忍)
 - Rolling 计算只用历史数据: `rolling(window).mean()` 不含当前 bar
@@ -31,3 +31,31 @@ paths: ["**/data/**", "**/data/*.py"]
 - 三者不重叠: 确保日期范围无交集
 - Test set 开发期间禁用: 只在最终评估时使用
 - 记录分割边界日期到 config
+
+## 因子评估指标
+
+| 指标 | 阈值 | 说明 |
+|------|------|------|
+| \|IC_mean\| | > 0.015 | 信息系数均值 |
+| \|IR\| | > 0.3 | 信息比率 (IC_mean / IC_std) |
+| IC 一致性 | > 52% | IC 同号比例 |
+| Sharpe | > 0 | 风险调整收益 |
+
+## Forward Return 定义
+```
+fwd_ret[t] = log(close[t+1+h] / close[t+1])   # delay=1
+```
+- signal 在 bar t 形成
+- bar t+1 执行 (delay=1, 模拟真实延迟)
+- bar t+1+h 平仓
+
+## 回测要求
+- 多品种测试: 不同期货品种交叉验证
+- 时间段稳定性: 分年/季度检查 IC 稳定性
+- 换手率合理: 过高换手 = 过拟合信号
+- 交易成本: 考虑滑点和手续费
+
+## 因子去重
+- 因子间相关性 < 0.7 (Pearson)
+- 新因子需与已有因子去重
+- 相关因子保留 IC 更高的

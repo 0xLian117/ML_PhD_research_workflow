@@ -1,7 +1,7 @@
 ---
 name: figure
-description: "生成论文级科学图表 (bar, trend, heatmap, scatter, multi-panel)"
-argument-hint: "[figure description or data source]"
+description: "生成图表: 数据图 / 架构图 / 流程图 / 论文图"
+argument-hint: "[description]"
 allowed-tools:
   - Read
   - Grep
@@ -9,76 +9,57 @@ allowed-tools:
   - Write
   - Edit
   - Bash
-  - Agent
 ---
-# /figure
+# /figure [description]
 
-基于 [figures4papers](https://github.com/ChenLiu-1996/figures4papers) 的绘图工具链。
+根据描述自动路由到最佳工具。
 
-## 参考文件
+## 目录结构
 
-| 文件 | 用途 |
-|------|------|
-| `figures/scripts/scientific_figure_pro.py` | matplotlib 封装 (style, palette, helpers) |
-| `figures/DESIGN_THEORY.md` | 设计理论 (调色板、排版、导出规范) |
-
-## 步骤
-
-### 1. 理解需求
-- 解析用户描述的图表内容
-- 确定图表类型: bar / trend / heatmap / scatter / multi-panel
-- 定位数据源:
-  - `results/` — 实验结果 (history.json, metrics)
-  - `explorations/` — 探索性分析
-  - 用户提供的数据
-
-### 2. 读取设计规范
-- 读 `figures/DESIGN_THEORY.md` 获取 house style 约定
-- 确认调色板语义:
-  - **Blue** (`#0F4D92`, `#3775BA`): 提出的方法 / 关键方法
-  - **Green** (`#8BCF8B` 等): 正向/改进
-  - **Red** (`#B64342` 等): 对比基线 / ablation
-  - **Neutral** (`#CFCECE`): 背景/参考
-  - **Highlight** (`#FFD700`): 需要强调的点
-
-### 3. 生成绘图脚本
-- 脚本保存到 `figures/scripts/plot_<name>.py`
-- **必须** 使用 `scientific_figure_pro` 模块:
-
-```python
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent))
-from scientific_figure_pro import (
-    apply_publication_style, FigureStyle, create_subplots,
-    finalize_figure, make_trend, make_grouped_bar, make_heatmap,
-    make_scatter, PALETTE, DEFAULT_COLORS,
-)
-
-apply_publication_style(FigureStyle(font_size=16, axes_linewidth=2.5))
-# ... 绘图逻辑 ...
-finalize_figure(fig, "figures/<name>", formats=["pdf", "png"], dpi=300)
+```
+figures/                        # 整个目录 gitignore
+├── DESIGN_THEORY.md            # 设计规范 (唯一进 git 的文件)
+├── src/                        # 源文件 (脚本/HTML/TeX)
+│   ├── plot_*.py
+│   ├── *.html
+│   └── *.tex
+└── out/                        # 生成输出
+    ├── data/                   # 数据图 (matplotlib/pyecharts)
+    ├── diagrams/               # 架构/流程图 (HTML→截图)
+    └── paper/                  # 论文图 (TikZ→PDF)
 ```
 
-- 遵守设计规范:
-  - 去除 top/right spines (已由 `apply_publication_style` 处理)
-  - Frameless legend
-  - 显式设置 y-limits (留适当 headroom)
-  - Dense bar panels 用 `font_size=24, axes_linewidth=3, dpi=600`
-  - Compact plots 用 `font_size=15-16, axes_linewidth=2`
-  - Multi-metric 比较用超宽画布 (width 3-4x height)
+## 路由
 
-### 4. 执行脚本
-```bash
-cd /Users/lian/Desktop/delta_research && python figures/scripts/plot_<name>.py
-```
+| 类型 | 工具 | src → out |
+|------|------|-----------|
+| 数据图 (IC曲线, loss, bar) | matplotlib / pyecharts | `src/*.py` → `out/data/*.{png,pdf,html}` |
+| 架构图 / 流程图 | HTML+JS (Canvas/SVG) | `src/*.html` → `out/diagrams/*.png` |
+| 论文内嵌图 | TikZ | `src/*.tex` → `out/paper/*.pdf` |
 
-### 5. 验证输出
-- 确认 PDF/PNG 生成在 `figures/` 目录
-- 检查文件大小合理
-- 告知用户输出路径
+## 数据图 (matplotlib / pyecharts)
 
-### 6. 输出格式
-- 论文图: `figures/<name>.pdf` + `figures/<name>.png`
-- 探索性图: 仅 PNG 即可
-- 脚本留存: `figures/scripts/plot_<name>.py` (可复现)
+- 源: `figures/src/plot_[name].py`
+- 输出: `figures/out/data/[name].png` (300dpi) + `.pdf`
+- pyecharts: `figures/out/data/[name].html` (交互式)
+- 遵循 `figures/DESIGN_THEORY.md` 配色规范
+
+## 架构图 / 流程图 (HTML+JS)
+
+- 源: `figures/src/[name].html`
+- Canvas API / SVG / CSS, 可引用 web 图标库
+- 预览: `open figures/src/[name].html`
+- 导出: 截图到 `figures/out/diagrams/[name].png`
+
+## 论文图 (TikZ)
+
+- 源: `figures/src/[name].tex`
+- 编译: `pdflatex -output-directory=figures/out/paper figures/src/[name].tex`
+- 输出: `figures/out/paper/[name].pdf`
+
+## 设计规范
+
+参考 `figures/DESIGN_THEORY.md`:
+- 配色: 蓝 (proposed), 绿/红 (ablation), 灰 (baseline)
+- 字号: 标题 14pt, 标签 11pt, 刻度 9pt
+- 导出: PDF + PNG@300dpi
